@@ -9,9 +9,10 @@ dir_path_public = "./docs"
 dir_path_content = "./content"
 template_path = "./template.html"
 
-basepath = sys.argv[0] if len(sys.argv) > 1 else "/"
+basepath = sys.argv[1] if len(sys.argv) > 1 else "/"
 
 def main():
+    print(basepath)
     copy = copy_static_to_public()
 
     generate_all_htmls(
