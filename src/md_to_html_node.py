@@ -85,7 +85,7 @@ def generate_page(from_path, template_path, dest_path, basepath):
     html = html_nodes.to_html()
 
     complete_html = template_contents.replace("{{ Title }}", title).replace("{{ Content }}", html)
-    complete_html_with_paths = complete_html.replace('href="/', f'href="/{basepath}').replace('src="/', f'src="/{basepath}')
+    complete_html_with_paths = complete_html.replace('href="/', f'href="{basepath}').replace('src="/', f'src="{basepath}')
 
     dest_dir_path = os.path.dirname(dest_path)
     if dest_dir_path != "":
