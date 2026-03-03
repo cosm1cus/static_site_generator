@@ -68,7 +68,7 @@ def text_to_children(text):
         childrens.append(text_node_to_html_node(node))
     return childrens
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, basepath):
     if not os.path.exists(from_path):
         raise Exception("From path doesn't exists")
     if not os.path.exists(template_path):
@@ -85,19 +85,20 @@ def generate_page(from_path, template_path, dest_path):
     html = html_nodes.to_html()
 
     complete_html = template_contents.replace("{{ Title }}", title).replace("{{ Content }}", html)
+    complete_html_with_paths = complete_html.replace('href="/', f'href="/{basepath}').replace('src="/', f'src="/{basepath}')
 
     dest_dir_path = os.path.dirname(dest_path)
     if dest_dir_path != "":
         os.makedirs(dest_dir_path, exist_ok=True)
 
     with open(dest_path, "x") as f:
-        f.write(complete_html)
+        f.write(complete_html_with_paths)
 
-def generate_all_htmls(from_path, template_path, dest_path):
+def generate_all_htmls(from_path, template_path, dest_path, basepath):
     file_list = os.listdir(from_path)
     for file in file_list:
         if os.path.isfile(os.path.join(from_path, file)) and file == "index.md":
-            generate_page(os.path.join(from_path, file), template_path, os.path.join(dest_path, "index.html"))
+            generate_page(os.path.join(from_path, file), template_path, os.path.join(dest_path, "index.html"), basepath)
         else:
-            generate_all_htmls(os.path.join(from_path, file), template_path, os.path.join(dest_path, file))
+            generate_all_htmls(os.path.join(from_path, file), template_path, os.path.join(dest_path, file), basepath)
 

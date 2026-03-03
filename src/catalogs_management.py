@@ -4,17 +4,17 @@ import shutil
 def copy_static_to_public():
     if os.path.exists("static"):
         del_public = clear_public()
-        copy = copy_to_public("static", "public")
+        copy = copy_to_public("static", "docs")
         return copy
     else:
-        raise Exception("Error: Static is not exist")
+        raise Exception("Error: Docs is not exist")
 
 def clear_public():
-    if os.path.exists("public"):
-         shutil.rmtree("public")
-         os.mkdir("public")
+    if os.path.exists("docs"):
+         shutil.rmtree("docs")
+         os.mkdir("docs")
     else:
-        os.mkdir("public")
+        os.mkdir("docs")
 
 def copy_to_public(curr_static, curr_public):
     file_list = os.listdir(curr_static)
